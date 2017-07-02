@@ -1,0 +1,22 @@
+		**************************************************
+		* ------------ Listener Changelog -------------- *
+		* - Server / Database Engineer: Thomas Rokicki - *
+		* --------- Document By: Thomas Rokicki -------- *
+		* ---------------------------------------------- *
+		* -------------- Date: 5/30/2017 --------------- *
+		* ------------ Revised: 5/30/2017 -------------- *
+		* ---------------------------------------------- *
+		* ---- Corresponding Version: 0.0.1-SNAPSHOT --- *
+		* ---------------------------------------------- *
+		**************************************************
+
+		------------- Version: 0.0.1-SNAPSHOT ------------
+First responsive version to be saved for release. This version of GreenhouseListener
+is functional with JSON format making POST requests to the server. The Listener is 
+able to take the data dn put it into a Mongo Database. This is a SNAPSHOT and we 
+expect minimum but numorous errors to occur. This is mostly due to little testing and
+code that is written in a "perfect world" way. There is not much code to support or
+handle exceptions at run-time. This will change overtime and we plan to add text and
+e-mail notification to various administrators of the project. In addition, it is 
+importand we work towards creating a maintainable configuration file to contain 
+information that is subject to change (port#, database name, notification addresses).
