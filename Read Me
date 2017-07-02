@@ -1,0 +1,20 @@
+READ ME
+
+This will help explain how this jar file works to all of you whom continue this
+task. Be sure to read the java documentation as this will help explain the code
+as well.
+This file will be updated over time. Thank you for your patience. 
+
+**A NOTE TO FUTURE AUTHORS: You MUST include documentation for your changes. It
+is CRITICAL to the growth and maintainability of our project. 
+
+This service is intended to be hosted on the back-end (meaning the end-user 
+will not see or access this). 
+
+*** START-UP ***
+This service begins by starting Spring and running a Tomcat server that will 
+wait until a request is sent to it. [To change the port that the server runs on
+please see 'main/resources/application.properties' : 'server.port'].
+
+
+
