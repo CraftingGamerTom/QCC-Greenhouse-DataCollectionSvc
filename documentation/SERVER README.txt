@@ -34,6 +34,21 @@ E-mail notification for overheating, unsafe humidity levels, motor failure,
 hydroponic water levels, and data transfer error reports are to be implemented 
 (***This may also be handled by the Raspberry Pi*** TO BE DETERMINED). 
 
+			----------   REST Endpoints    ----------
+The DataCollector service handles requests based on endpoints and the information
+in JSON format (See below). Endpoints can be over simplified by calling them links
+that are typed into a browser. Below are a list of the current endpoints in the 
+service and what they do
+POST:
+ - /sensorData
+	Puts sensor data into the raw data database table
+ - /observationData
+	Puts observation data into the observation database table
+ - /sensorData/{ard}/{sens}
+	Currently only returns a response code
+ - /sensorData/{id}
+	Currently only returns a response code
+
 			----------   Data Collection   ----------
 
 There are currently five types of sensor objects. The seperation of Objects is 
