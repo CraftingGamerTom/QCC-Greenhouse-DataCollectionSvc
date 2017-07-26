@@ -51,7 +51,7 @@ public class TeardownHandler {
 	public void parseObservationJson(String in) {
 
 		final ObjectMapper mapper = new ObjectMapper();
-		final String databaseName = ConfigurationReader.rawSensorDatabaseName;
+		final String databaseName = ConfigurationReader.observationDatabaseName;
 		try {
 			JsonNode json = mapper.readTree(in);
 			JsonNode dateNode = json.get("date");
