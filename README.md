@@ -22,6 +22,14 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTIO
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+                            OTHER LICENSES
+- This software uses MongoDB and is intended to be ran alongside it. I do not own
+anything that MongoDB has written. Big thank you to the MongoDB team for being
+awesome.
+- This software uses Apache Tomcat to run as a REST Client. I do not own anything
+written by Apache but would like to thank them for all their hard work.
+- This software uses Spring.io to boot and run Apache Tomcat. I do not own anything
+written by the Spring.io folks. You guys are pretty cool though, nice work.
 
                             THINGS TO KNOW
 
