@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
-import sensors.Sensor;
+import executable.ConfigurationReader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -17,7 +17,6 @@ import java.io.IOException;
  */
 public class TeardownHandler {
 
-	private String test = "{\"date\":\"01-01-2017T12:01:00Z\", \"sensors\":[{\"id\":\"/arduino1/temperature1\", \"type\":\"temperature\", \"value\":\"test\"}, {\"id\":\"/arduino1/humidity1\", \"type\":\"humidity\", \"value\":22}] }";
 
 	/**
 	 * Takes a JSON String and parses it into objects. For more information on 
@@ -25,10 +24,10 @@ public class TeardownHandler {
 	 * 
 	 * @param in the JSON String.
 	 */
-	public void parseJson(String in) {
+	public void parseSensorJson(String in) {
 
 		final ObjectMapper mapper = new ObjectMapper();
-		final String databaseName = "greenhouseTest";
+		final String databaseName = ConfigurationReader.databaseName;
 		try {
 			JsonNode json = mapper.readTree(in);
 			JsonNode dateNode = json.get("date");
@@ -43,9 +42,31 @@ public class TeardownHandler {
 		}
 	}
 
-	void test() {
-		parseJson(test);
+	/**
+	 * Takes a JSON String and parses it into objects. For more information on 
+	 * object types and formating see the README file for the project.
+	 * 
+	 * @param in the JSON String.
+	 */
+	public void parseObservationJson(String in) {
+
+		final ObjectMapper mapper = new ObjectMapper();
+		final String databaseName = ConfigurationReader.databaseName;
+		try {
+			JsonNode json = mapper.readTree(in);
+			JsonNode dateNode = json.get("date");
+			JsonNode usernameNode = json.get("username");
+			JsonNode observationNode = json.get("note");
+			
+			DatabaseHandler dbh = new DatabaseHandler(databaseName);
+			dbh.addObservationDataToDatabase(dateNode, usernameNode, observationNode);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
 
 	// ---------------------------------------------
 	/**

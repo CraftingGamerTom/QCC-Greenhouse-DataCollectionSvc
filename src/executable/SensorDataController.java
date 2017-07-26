@@ -12,6 +12,13 @@ import handlers.TeardownHandler;
 import payloads.SensorDataResponse;
 import payloads.SensorUpdateResponse;
 
+/**
+ * Sensor data controller class handles the Incoming traffic Posting data to the
+ * database
+ * 
+ * @author Thomas Rokicki
+ *
+ */
 @RestController
 public class SensorDataController {
 
@@ -52,18 +59,38 @@ public class SensorDataController {
 	/**
 	 * The is how the data is posted the database. The Raspberry Pi is what is
 	 * going to send a POST request. This method handles that POST request.
+	 * Ultimately the data will be put into the database.
 	 * 
 	 * @param req
 	 *            The JSON formatted String.
 	 * @return an HTTP status code.
 	 */
 	@RequestMapping(value = "/sensorData", method = RequestMethod.POST)
-	public ResponseEntity<SensorUpdateResponse> update(@RequestBody String req) {
+	public ResponseEntity<SensorUpdateResponse> recieveSensorData(@RequestBody String req) {
 
 		SensorUpdateResponse res = new SensorUpdateResponse();
 		res.setValue(req);
 		TeardownHandler tearHandler = new TeardownHandler();
-		tearHandler.parseJson(req);
+		tearHandler.parseSensorJson(req);
+		return new ResponseEntity<SensorUpdateResponse>(res, HttpStatus.OK);
+	}
+
+	/**
+	 * Method to handle the data incoming for observation notes. This data will
+	 * ultimately be put into the database. This simply gets the pay load and
+	 * forwards it through the rest of the api and then gives a response.
+	 * 
+	 * @param req
+	 *            The JSON formatted String.
+	 * @return an HTTP status code.
+	 */
+	@RequestMapping(value = "/observationData", method = RequestMethod.POST)
+	public ResponseEntity<SensorUpdateResponse> recieveObservationData(@RequestBody String req) {
+
+		SensorUpdateResponse res = new SensorUpdateResponse();
+		res.setValue(req);
+		TeardownHandler tearHandler = new TeardownHandler();
+		tearHandler.parseObservationJson(req);
 		return new ResponseEntity<SensorUpdateResponse>(res, HttpStatus.OK);
 	}
 }

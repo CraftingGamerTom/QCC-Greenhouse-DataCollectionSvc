@@ -92,4 +92,15 @@ public class DatabaseHandler {
 		}
 		return isValidType;
 	}
+
+	public void addObservationDataToDatabase(JsonNode dateNode, JsonNode usernameNode, JsonNode observationNode) {
+		MongoCollection<Document> table = database.getCollection("observations");
+
+		Document document = new Document();
+		document.put("date", dateNode.asText());
+		document.put("username", usernameNode.asText());
+		document.put("observation", observationNode.asText());
+		
+		table.insertOne(document);
+	}
 }
