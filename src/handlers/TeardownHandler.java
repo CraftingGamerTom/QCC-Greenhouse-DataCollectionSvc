@@ -56,7 +56,7 @@ public class TeardownHandler {
 			JsonNode json = mapper.readTree(in);
 			JsonNode dateNode = json.get("date");
 			JsonNode usernameNode = json.get("username");
-			JsonNode observationNode = json.get("note");
+			JsonNode observationNode = json.get("observation");
 			
 			DatabaseHandler dbh = new DatabaseHandler(databaseName);
 			dbh.addObservationDataToDatabase(dateNode, usernameNode, observationNode);
