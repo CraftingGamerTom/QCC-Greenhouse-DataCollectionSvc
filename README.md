@@ -1,6 +1,47 @@
 # QCC-Greenhouse-DataCollectionSvc
 QCC Live and Learn Greenhouse data collection service to be ran on a server.
 
+                                 MIT LICENSE
+
+Copyright 2017 Thomas Rokicki
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of 
+this software and associated documentation files (the "Software"), to deal in the 
+Software without restriction, including without limitation the rights to use, 
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the 
+Software, and to permit persons to whom the Software is furnished to do so, 
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all 
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+                            THINGS TO KNOW
+
+This will help explain how this jar file works to all of you whom continue this
+task. Be sure to read the java documentation as this will help explain the code
+as well.
+This file will be updated over time. Thank you for your patience. 
+
+**A NOTE TO FUTURE AUTHORS: You MUST include documentation for your changes. It
+is CRITICAL to the growth and maintainability of our project. 
+
+This service is intended to be hosted on the back-end (meaning the end-user 
+will not see or access this). 
+
+*** START-UP ***
+This service begins by starting Spring and running a Tomcat server that will 
+wait until a request is sent to it. [To change the port that the server runs on
+please see 'main/resources/application.properties' : 'server.port'].
+
+
 		**************************************************
 		* ----------------- READ ME -------------------- *
 		* - Server / Database Engineer: Thomas Rokicki - *
