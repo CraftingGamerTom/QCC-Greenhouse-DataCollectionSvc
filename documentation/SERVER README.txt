@@ -34,7 +34,7 @@ E-mail notification for overheating, unsafe humidity levels, motor failure,
 hydroponic water levels, and data transfer error reports are to be implemented 
 (***This may also be handled by the Raspberry Pi*** TO BE DETERMINED). 
 
-			----------   REST Endpoints    ----------
+			----------   REST Endpoints    ---------- *Also in DataCollectionSvc Readme
 The DataCollector service handles requests based on endpoints and the information
 in JSON format (See below). Endpoints can be over simplified by calling them links
 that are typed into a browser. Below are a list of the current endpoints in the 
@@ -49,7 +49,7 @@ POST:
  - /sensorData/{id}
 	Currently only returns a response code
 
-			----------   Data Collection   ----------
+			----------   Data Collection   ---------- *Also in DataCollectionSvc Readme
 
 There are currently five types of sensor objects. The seperation of Objects is 
 mearly for maintainability and understanding. These values are derived from json
@@ -88,7 +88,7 @@ the User Interface (UI) on the front-end or via console.
 	~ID (unique identification maintained from sensor)
 	~double (value)
 
-			----------     JSON Format     ----------
+			----------     JSON Format     ---------- *Also in DataCollectionSvc Readme
 An example is given below for how the data sent should be formatted to be sent as
 a payload. The date is standard ISO 8601 format. Java is able to generate this for
 you so please make it easy on yourself and use the standard java libraries to do 
@@ -132,7 +132,7 @@ it properly.
 }
 			
 
-			---------- Collection Schedule ----------
+			---------- Collection Schedule ---------- *Also in DataCollectionSvc Readme
 
 As stated previously, the server handles data as it is given to it. The data will 
 be received as an Array of data types in json format. The data is (presumably) 
@@ -140,7 +140,7 @@ collected once per minute. This number is currently to keep an efficient pace bu
 may be changed later. Once the "package" of information is created with the data 
 it is sent to the server for collection. 
 
-			----------   Data Retention    ----------
+			----------   Data Retention    ---------- *Also in DataCollectionSvc Readme
 
 Data is to be collected and stored at the rate it is given to it. There will be two
 available procedures for viewing data [Past 24 hours] & [Stored Data].
@@ -164,7 +164,7 @@ This prevents overloading the system with a large request. A date and time will 
 requested from a user and the database will work from that.
 
 
-			---------- Sending Data to RPi ----------
+			---------- Sending Data to RPi ---------- *Also in DataCollectionSvc Readme
 A user whom needs to speak to the raspberry pi from the Website UI will go through a 
 REST API. The only reason for this currently is to control motors (Vents and door). 
 This is hidden behind an authentication software. Users must be authorized to use that 
@@ -234,6 +234,12 @@ Webserver Management
 		https://www.mulesoft.com/tcat/tomcat-linux
 	- How to build a Web Servlet in java
 		https://www.sitepoint.com/tutorial-building-web-app-with-java-servlets/
+	- Building a Servlet in Java from scratch
+		https://youtu.be/Vvnliarkw48
+	- Building a Server Application in Java EE 
+		https://youtu.be/Av6zh817QEc
+	- Building a Web app with Maven
+		https://www.mkyong.com/maven/how-to-create-a-web-application-project-with-maven/
 		
 Authentication
 	- How to use Keycloak part 1 (Setup)
