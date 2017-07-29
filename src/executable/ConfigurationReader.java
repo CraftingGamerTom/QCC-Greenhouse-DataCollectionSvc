@@ -21,9 +21,9 @@ public class ConfigurationReader {
 	private File configLocation = new File("src/main/resources/configuration.cfg");
 
 	// Public tags
-	public static String rawSensorDatabaseName;
-	public static String observationDatabaseName;
-	public static String persistantSensorDatabaseName;
+	public static String rawSensorTable;
+	public static String observationTable;
+	public static String persistantSensorTable;
 
 	/**
 	 * Loads the configuration file when created.
@@ -43,9 +43,9 @@ public class ConfigurationReader {
 			properties.load(reader);
 
 			// Sets the configurations - Add properties here
-			rawSensorDatabaseName = properties.getProperty("rawSensorDatabaseName");
-			observationDatabaseName = properties.getProperty("observationDatabaseName");
-			persistantSensorDatabaseName = properties.getProperty("persistantSensorDatabaseName");
+			rawSensorTable = properties.getProperty("rawSensorTable");
+			observationTable = properties.getProperty("observationTable");
+			persistantSensorTable = properties.getProperty("persistantSensorTable");
 
 			System.out.println("ConfigurationReader: Configuration Read / Updated");
 		} catch (FileNotFoundException e) {
@@ -72,8 +72,8 @@ public class ConfigurationReader {
 	 */
 	public void verify() {
 
-		System.out.println(rawSensorDatabaseName);
-		System.out.println(observationDatabaseName);
-		System.out.println(persistantSensorDatabaseName);
+		System.out.println(rawSensorTable);
+		System.out.println(observationTable);
+		System.out.println(persistantSensorTable);
 	}
 }
