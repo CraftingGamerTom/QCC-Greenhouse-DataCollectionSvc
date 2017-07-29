@@ -27,13 +27,13 @@ public class TeardownHandler {
 	public void parseSensorJson(String in) {
 
 		final ObjectMapper mapper = new ObjectMapper();
-		final String databaseName = ConfigurationReader.rawSensorTable;
+		final String tableName = ConfigurationReader.rawSensorTable;
 		try {
 			JsonNode json = mapper.readTree(in);
 			JsonNode dateNode = json.get("date");
 			ArrayNode arrayOfData = (ArrayNode) json.get("sensors");
 			
-			DatabaseHandler dbh = new DatabaseHandler(databaseName);
+			DatabaseHandler dbh = new DatabaseHandler(tableName);
 			dbh.addSensorDataToDatabase(arrayOfData, dateNode);
 
 		} catch (IOException e) {
@@ -51,14 +51,14 @@ public class TeardownHandler {
 	public void parseObservationJson(String in) {
 
 		final ObjectMapper mapper = new ObjectMapper();
-		final String databaseName = ConfigurationReader.observationTable;
+		final String tableName = ConfigurationReader.observationTable;
 		try {
 			JsonNode json = mapper.readTree(in);
 			JsonNode dateNode = json.get("date");
 			JsonNode usernameNode = json.get("username");
 			JsonNode observationNode = json.get("observation");
 			
-			DatabaseHandler dbh = new DatabaseHandler(databaseName);
+			DatabaseHandler dbh = new DatabaseHandler(tableName);
 			dbh.addObservationDataToDatabase(dateNode, usernameNode, observationNode);
 
 		} catch (IOException e) {

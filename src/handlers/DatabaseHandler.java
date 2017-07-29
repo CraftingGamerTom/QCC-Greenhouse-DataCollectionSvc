@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
+import executable.ConfigurationReader;
 /**
  * This class handles anything this Listener must do with the database.
  * 
@@ -27,9 +29,10 @@ public class DatabaseHandler {
 	 * @param database
 	 *            name
 	 */
-	DatabaseHandler(String dbname) {
-			mongo = new MongoClient("localhost", 27017);
-			database = mongo.getDatabase(dbname);
+	DatabaseHandler(String tableName) {
+			// Connects to the MongoDB (Set in Configuration File)
+			mongo = new MongoClient(ConfigurationReader.databaseIP, ConfigurationReader.databasePort);
+			database = mongo.getDatabase(tableName);
 	}
 
 	/**

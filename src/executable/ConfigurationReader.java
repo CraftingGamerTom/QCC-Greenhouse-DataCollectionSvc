@@ -21,6 +21,9 @@ public class ConfigurationReader {
 	private File configLocation = new File("src/main/resources/configuration.cfg");
 
 	// Public tags
+	public static String databaseIP;
+	public static int databasePort;
+	
 	public static String rawSensorTable;
 	public static String observationTable;
 	public static String persistantSensorTable;
@@ -43,6 +46,9 @@ public class ConfigurationReader {
 			properties.load(reader);
 
 			// Sets the configurations - Add properties here
+			databaseIP = properties.getProperty("databaseIP");
+			databasePort = Integer.parseInt(properties.getProperty("databasePort"));
+			
 			rawSensorTable = properties.getProperty("rawSensorTable");
 			observationTable = properties.getProperty("observationTable");
 			persistantSensorTable = properties.getProperty("persistantSensorTable");
@@ -71,9 +77,23 @@ public class ConfigurationReader {
 	 * Developer MUST update tags when config tags are changed.
 	 */
 	public void verify() {
-
+		System.out.println("** CONFIGURATION VISUAL VERIFICATION **\n*");
+		
+		System.out.print("* Database IP: ");
+		System.out.println(databaseIP);
+		
+		System.out.print("* Database Port: ");
+		System.out.println(databasePort);
+		
+		System.out.print("* Raw Data Table: ");
 		System.out.println(rawSensorTable);
+
+		System.out.print("* Observation Table: ");
 		System.out.println(observationTable);
+		
+		System.out.print("* Persistant Sensor Table: ");
 		System.out.println(persistantSensorTable);
+		
+		System.out.println("*\n** END CONFIGURATION VISUAL VERIFICATION **");
 	}
 }
