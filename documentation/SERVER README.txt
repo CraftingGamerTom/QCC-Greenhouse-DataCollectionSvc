@@ -240,6 +240,9 @@ Webserver Management
 		https://youtu.be/Av6zh817QEc
 	- Building a Web app with Maven
 		https://www.mkyong.com/maven/how-to-create-a-web-application-project-with-maven/
+Web Application
+	- Static Files not loading info
+		https://stackoverflow.com/questions/45520268/spring-framework-mapping-handling-did-not-find-handler-method
 		
 Authentication
 	- How to use Keycloak part 1 (Setup)
