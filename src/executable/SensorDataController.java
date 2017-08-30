@@ -29,6 +29,19 @@ public class SensorDataController {
 	 *            the identification.
 	 * @return an HTTP status code.
 	 */
+	@RequestMapping(value = "/testResponse", method = RequestMethod.GET)
+	public String get() {
+
+		return "Test";
+	}
+	
+	/**
+	 * Handles a GET request via id of a sensor (Example).
+	 * 
+	 * @param id
+	 *            the identification.
+	 * @return an HTTP status code.
+	 */
 	@RequestMapping(value = "/sensorData/{id}", method = RequestMethod.GET)
 	public ResponseEntity<SensorDataResponse> get(@PathVariable String id) {
 
