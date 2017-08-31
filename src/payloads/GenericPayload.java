@@ -1,12 +1,10 @@
 package payloads;
 
-// {"time":"MMDDYY", 
-//  "sensors":[
-//	    {"id":"/ardXX/sensYY", "value":100}, 
-//      {"id":"/ardXX/sensZZ", "value":101},
-//	   ] 
-//	}
-
+/**
+ * This is returned to the caller of an endpoint
+ * @author Thomas Rokicki
+ *
+ */
 public class GenericPayload {
 	private String value;
 
