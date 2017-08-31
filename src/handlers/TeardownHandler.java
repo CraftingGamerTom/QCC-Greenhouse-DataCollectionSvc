@@ -3,9 +3,6 @@ package handlers;
 import org.json.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-
-import executable.ConfigurationReader;
-
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
@@ -27,7 +24,7 @@ public class TeardownHandler {
 	public void parseSensorJson(String in) {
 
 		final ObjectMapper mapper = new ObjectMapper();
-		final String tableName = ConfigurationReader.rawSensorTable;
+		final String tableName = ConfigurationHandler.rawSensorTable;
 		try {
 			JsonNode json = mapper.readTree(in);
 			JsonNode dateNode = json.get("date");
@@ -51,7 +48,7 @@ public class TeardownHandler {
 	public void parseObservationJson(String in) {
 
 		final ObjectMapper mapper = new ObjectMapper();
-		final String tableName = ConfigurationReader.observationTable;
+		final String tableName = ConfigurationHandler.observationTable;
 		try {
 			JsonNode json = mapper.readTree(in);
 			JsonNode dateNode = json.get("date");
