@@ -1,7 +1,7 @@
 /**
  * 
  */
-package executable;
+package handlers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,7 @@ import java.util.Properties;
  * @author Thomas Rokicki
  *
  */
-public class ConfigurationReader {
+public class ConfigurationHandler {
 
 	// Config file name here
 	private File configLocation = new File("src/main/resources/configuration.cfg");
@@ -31,7 +31,7 @@ public class ConfigurationReader {
 	/**
 	 * Loads the configuration file when created.
 	 */
-	public ConfigurationReader() {
+	public ConfigurationHandler() {
 
 	}
 
