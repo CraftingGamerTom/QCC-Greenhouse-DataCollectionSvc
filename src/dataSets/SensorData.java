@@ -8,7 +8,7 @@ package dataSets;
  * @author Thomas Rokicki
  *
  */
-public class Sensor {
+public class SensorData {
 	private String date;
 	private String id;
 	private String type;
@@ -17,7 +17,7 @@ public class Sensor {
 	/**
 	 * Generic Sensor initialization with no data.
 	 */
-	public Sensor() {
+	public SensorData() {
 
 	}
 
@@ -28,11 +28,11 @@ public class Sensor {
 	 * @param value
 	 * @param date
 	 */
-	public Sensor(String date, String id, String type, String value) {
+	public SensorData(String date, String id, String type, String value) {
+		this.date = date;
 		this.id = id;
 		this.type = type;
 		this.value = value;
-		this.date = date;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class Sensor {
 	 * @param type
 	 * @param value
 	 */
-	public Sensor(String id, String type, String value) {
+	public SensorData(String id, String type, String value) {
 		this.id = id;
 		this.type = type;
 		this.value = value;

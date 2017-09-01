@@ -2,7 +2,7 @@ package accessors;
 
 import java.util.NoSuchElementException;
 
-import dataSets.Sensor;
+import dataSets.SensorData;
 import exceptions.QueueException;
 import executable.Application;
 
@@ -23,7 +23,7 @@ public class SensorDataQueueAccessor {
 	 * @throws QueueException
 	 *             to allow the thread to sleep
 	 */
-	public Sensor getNextSensor() throws QueueException {
+	public SensorData getNextSensor() throws QueueException {
 		try {
 			return Application.sdq.getFirst();
 		} catch (NoSuchElementException e) {
@@ -36,14 +36,14 @@ public class SensorDataQueueAccessor {
 	 * 
 	 * @param sens
 	 */
-	public void queueSensor(Sensor sens) {
+	public void queueSensor(SensorData sens) {
 		Application.sdq.addLast(sens);
 	}
 
 	/**
 	 * Removes the last item on a queue
 	 */
-	public void deleteSensor(Sensor sens) throws QueueException {
+	public void deleteSensor(SensorData sens) throws QueueException {
 		try {
 			Application.sdq.removeLast();
 		} catch (NoSuchElementException e) {
