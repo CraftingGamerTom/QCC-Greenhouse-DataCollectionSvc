@@ -6,14 +6,14 @@ package payloads;
  *
  */
 public class GenericPayload {
-	private String value;
+	private String body;
 
-	public String getValue() {
-		return value;
+	public String getBody() {
+		return body;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setBody(String body) {
+		this.body = body;
 	}
 	
 }
