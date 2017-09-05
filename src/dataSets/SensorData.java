@@ -8,11 +8,13 @@ package dataSets;
  * @author Thomas Rokicki
  *
  */
+
 public class SensorData {
+
 	private String date;
-	private String id;
+	private String sensorId;
 	private String type;
-	private String value;
+	private Double value;
 
 	/**
 	 * Generic Sensor initialization with no data.
@@ -23,31 +25,16 @@ public class SensorData {
 
 	/**
 	 * Creates a sensor. The method includes the date when created.
-	 * @param id
+	 * @param sensorId
 	 * @param type
 	 * @param value
 	 * @param date
 	 */
-	public SensorData(String date, String id, String type, String value) {
+	public SensorData(String date, String sensorId, String type, Double value) {
 		this.date = date;
-		this.id = id;
+		this.sensorId = sensorId;
 		this.type = type;
 		this.value = value;
-	}
-
-	/**
-	 * Creates a sensor. This method does not include a date but the date will
-	 * must be provided later or it will be left blank.
-	 * 
-	 * @param id
-	 * @param type
-	 * @param value
-	 */
-	public SensorData(String id, String type, String value) {
-		this.id = id;
-		this.type = type;
-		this.value = value;
-		this.date = "";
 	}
 
 	public String getDate() {
@@ -66,19 +53,18 @@ public class SensorData {
 		this.type = type;
 	}
 
-	public String getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
-
-	public String getId() {
-		return id;
+	public String getSensorId() {
+		return sensorId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setSensorId(String sensorId) {
+		this.sensorId = sensorId;
 	}
 }
