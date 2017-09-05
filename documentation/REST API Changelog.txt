@@ -11,9 +11,8 @@
 		**************************************************
 		
 		-------------       NEXT VERSION      ------------
- - Added Configuration File and a way to read it into the software
- - Added Observation notes POST to database handling
- - (Documentation) Updated Example JSON
+ - Secure the database and application with authentication
+ - Set up E-Mail notifications for data not coming in, extreme values, etc\
 		
 		------------- Version: 0.0.1-SNAPSHOT ------------
 First responsive version to be saved for release. This version of GreenhouseListener
@@ -25,3 +24,20 @@ handle exceptions at run-time. This will change overtime and we plan to add text
 e-mail notification to various administrators of the project. In addition, it is 
 importand we work towards creating a maintainable configuration file to contain 
 information that is subject to change (port#, database name, notification addresses).
+
+		------------- Version: 0.0.2-SNAPSHOT ------------
+The entire RESTful API was redone. Not a single file from the previous version remains.
+In this new version the data is now put into the proper collections that the front end
+is prepared to talk to. With this update came the use of threads to allow for larger 
+amount of sensors to be handled without slowing down the system or response. This 
+version is fully functional for BETA testing. It could use some cleaning up and there 
+are more features we wish to add in the future. A configuration file and reader was also
+implemented in this update to handle the mongoDB connection and the collection names.
+This is listed below to make it easier to read quickly:
+ - Added Threads
+ - Added Configuration File and Reader for Mongo Connection and collection names
+ - Updated the JSON format to its final form (Hopefully)
+ - Disabled default MongoConnection on Spring Boot
+ - Added queue for the sensor data to be put into while waiting to be handled
+ - Changed end points to make more sense
+ - Setup a Singleton Instance of the Mongo Client to fix memory leak

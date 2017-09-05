@@ -28,7 +28,7 @@ Server is to sort data into a database (MongoDB) when it has been given such dat
 by the Raspberry Pi (which is scheduled). The data in the Mongo database is to be
 accessible via the internet via a User Interface (UI) available on [QCC Server?]. 
 This mentioned UI is designed to have multiple ways to Data Mine the database as 
-well as provide live feedback. In addtion, in the event of a temperature higher 
+well as provide live feedback. In addition, in the event of a temperature higher 
 than specified by the server, vents are to be open by the server automatically.
 E-mail notification for overheating, unsafe humidity levels, motor failure, 
 hydroponic water levels, and data transfer error reports are to be implemented 
@@ -41,33 +41,23 @@ that are typed into a browser. Below are a list of the current endpoints in the
 service and what they do
 POST:
  - /sensorData
-	Puts sensor data into the raw data database table
- - /observationData
-	Puts observation data into the observation database table
- - /sensorData/{ard}/{sens}
-	Currently only returns a response code
- - /sensorData/{id}
-	Currently only returns a response code
+	~Puts sensor data into the raw data database table
+	~Puts sensor data in persistent tables for UI (hourly, daily, weekly, monthly, 
+	yearly)
+	~Puts sensor data in for live data viewing (Keeps latest sensor info)
+	~Creates database to handle friendly sensor names
+
 
 			----------   Data Collection   ---------- *Also in DataCollectionSvc Readme
 
-There are currently five types of sensor objects. The seperation of Objects is 
-mearly for maintainability and understanding. These values are derived from json
-formatted text. They are stored as Sensor.java Objects in the Listener Service.
-Once the JSON string is seperated into objects the database is updated and the
-objects are forgotten from memory. After this point all data must be accessed via
-the User Interface (UI) on the front-end or via console.
+The types of sensor objects are not limited. They are determined by the JSON sent 
+to the REST client. The seperation of Objects is mearly for maintainability and 
+understanding. These values are derived from json formatted text. They are stored 
+as SensorData.java Objects in the Listener Service. Once the JSON string is seperated 
+into objects the database is updated and the objects are forgotten from memory. 
+After this point all data must be accessed via the User Interface (UI) on the front-end 
+or via console.
 
- - Door Object
-	~Type (sensor type)
-	~ID (unique identification maintained from sensor)
-	~boolean (Open/Close)
-
- - Motor Object
- 	~Type (sensor type)
-	~ID (unique identification maintained from sensor)
-	~boolean (Open/Close)
-	
  - Temperature Object
  	~Type (sensor type)
 	~ID (unique identification maintained from sensor)
@@ -95,7 +85,7 @@ you so please make it easy on yourself and use the standard java libraries to do
 it properly.
 
 {
-	"date": "2017-06-02T03:16:46+04:00",
+	"date": "2017-06-02T03:16:46-04:00",
 	"sensors": [{
 		"id": "rp1-01",
 		"type": "temperature",
@@ -118,12 +108,12 @@ it properly.
 		"value": 22.3
 	}, {
 		"id": "a02-01",
-		"type": "motor",
-		"value": false
+		"type": "temperature",
+		"value": 110
 	}, {
-		"id": "a02-01",
-		"type": "door",
-		"value": true
+		"id": "a02-02",
+		"type": "heat",
+		"value": 86
 	}, {
 		"id": "a02-03",
 		"type": "water",
@@ -143,22 +133,28 @@ it is sent to the server for collection.
 			----------   Data Retention    ---------- *Also in DataCollectionSvc Readme
 
 Data is to be collected and stored at the rate it is given to it. There will be two
-available procedures for viewing data [Past 24 hours] & [Stored Data].
+available procedures for viewing data.
 
- - Past 24 Hours
-This is the "raw data" it has the real time stamps, and exact data. We cannot store 
-this permanantly because it will be rather redundant. Maybe we will just collect less 
-often, who knows. In the meantime it is quite nice to see everything at a practically
-real-time rate. These charts will be reset every day at midnight.
+ - Raw Data
+ Raw data is all the data that is ever passed into the database - never purged
+ - Hourly Data
+ The High and Low value based on a given hour for each sensor
+ - Daily Data
+ The High and Low value based on a given day for each sensor
+ - Weekly Data
+ The High and Low value based on a given week for each sensor
+ - Monthly Data
+ The High and Low value based on a given month for each sensor
+ - Yearly Data
+ The High and Low value based on a given year for each sensor
+ 
+The collection(table) names are maintained in another collection to be given a friendly
+name for the front end.
 
- - Stored Data
-This data is set every night at midnight. Only averages, highs, and lows are kept in 
-the database This is our way of viewing everything that has been logged in the past. 
-There will be an option to view the following options.
- Hourly - Shows Average, high, and low values on a chart (Up to 1 week)
- Daily - Shows Average, high, and low values on a chart (Up to 1 month)
- Weekly - Shows Average, high, and low values on a chart (Up to 1 year)
- Monthly - Shows Average, high, and low values on a chart (Indefinite)
+The collection names are defined in the configuration.cfg file that is read by the 
+ConfigurationHandler Object.
+
+Viewing on UI:
 These will come with check boxes to allow up to the designated time to show data.
 This prevents overloading the system with a large request. A date and time will be 
 requested from a user and the database will work from that.
@@ -169,10 +165,10 @@ A user whom needs to speak to the raspberry pi from the Website UI will go throu
 REST API. The only reason for this currently is to control motors (Vents and door). 
 This is hidden behind an authentication software. Users must be authorized to use that 
 part of the site. The persumed POST request sent to the Raspberry pi must be handled 
-by the raspberry pi accordingly.	
+by the raspberry pi accordingly.
 
 			---------- E-Mail Notification ----------
-E-mails are ment to be sent by the raspberry pi to admin email account to be notified
+E-mails are meant to be sent by the raspberry pi to admin email account to be notified
 when data pushes are missed. That is going to be handled by the raspberry pi according
 to Brendan Russel.
 
@@ -191,8 +187,8 @@ Front End will be divided into three parts to some degree.
  Users cannot edit data, or remote control the motors in the greenhouse.
  - Admin
  Admins may control the motors through the webserver. In the future it would be nice
- to implement a way to edit notes, delete notes, send emails, etc through some sort
- of admin panel.
+ to implement a way to edit notes, delete notes, send emails, and manage friendly sensor 
+ names etc through some sort of admin panel.
 			
 			  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 			  |       More Useful Information       |
@@ -228,6 +224,17 @@ Passing information on
 		https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC
 	- Validating JSON FORMAT
 		https://jsonlint.com/
+
+Putting Data into MongoDB
+	- Using Filters
+	http://mongodb.github.io/mongo-java-driver/3.4/driver/getting-started/quick-start/
+	- Better way to use Filters
+	https://www.programcreek.com/java-api-examples/index.php?api=com.mongodb.client.model.Filters
+	- Using MongoDB
+	http://mongodb.github.io/mongo-java-driver/2.13/getting-started/quick-tour/
+	- Query Data
+	https://www.mkyong.com/mongodb/java-mongodb-query-document/
+	
 
 Webserver Management
 	- How to setup TomCat on Linux
