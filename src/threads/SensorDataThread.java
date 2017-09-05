@@ -1,5 +1,6 @@
 package threads;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -57,6 +58,7 @@ public class SensorDataThread implements Runnable {
 				}
 			} catch (Exception e) {
 				logger.error("Exception caught in message loop processing: " + e);
+				e.printStackTrace();
 			}
 		}
 
@@ -182,7 +184,6 @@ public class SensorDataThread implements Runnable {
 	 * Pushes data to raw data collection
 	 */
 	private void pushRawData(SensorData sens) {
-		System.out.println("In push raw data. sensor: " + sens.getSensorId());
 		MongoCollection<Document> collection = database.getCollection(ConfigurationHandler.rawDataCollection);
 		Document document = new Document();
 		document.put("date", sens.getDate());
@@ -191,8 +192,6 @@ public class SensorDataThread implements Runnable {
 		document.put("value", sens.getValue());
 
 		collection.insertOne(document);
-		System.out.println("Finish push raw data. Sensor: " + sens.getSensorId());
-
 	}
 
 	/**
@@ -226,8 +225,7 @@ public class SensorDataThread implements Runnable {
 		Bson highUpdate = Updates.combine(Updates.set("date", sens.getDate()),
 				Updates.set("highValue", sens.getValue()));
 		// Update just Low Value
-		Bson lowUpdate = Updates.combine(Updates.set("date", sens.getDate()),
-				Updates.set("lowValue", sens.getValue()));
+		Bson lowUpdate = Updates.combine(Updates.set("date", sens.getDate()), Updates.set("lowValue", sens.getValue()));
 
 		// Search And Update HIGH VALUES
 		for (int index = 0; index < persistantCollections.size(); index++) {
@@ -238,32 +236,29 @@ public class SensorDataThread implements Runnable {
 
 				// Looks for the sensor and returns if it exists
 
-				searchResult = collection.find(Filters.and(sensorFilter, gtFilter)).first();
+				searchResult = collection.find(Filters.and(sensorFilter, gtFilter,
+						determineDateFilter(sens, collection.getNamespace().getCollectionName()))).first();
 
 				if (searchResult != null) {
 					// Hits code if their is a higher value
 					// Stops looking further
-					System.out.println(sens.getValue());
-					System.out.println(searchResult.toString());
-					System.out.println("HIGH Break 1");
-					if(searchResult.getDouble("highValue") > sens.getValue()){
-						System.out.println("IT THINKS " + searchResult.getDouble("highValue").toString() + " is greater than " + sens.getValue());
-					}
 					break;
 				}
 
 				if (searchResult == null) {
 					// Hits this code only if there is no sensor with greater
 					// value or sensor doesn't exist
-					System.out.println("HIGH null 1");
-					searchResult = collection.findOneAndUpdate(sensorFilter, highUpdate);
+					searchResult = collection.findOneAndUpdate(
+							Filters.and(sensorFilter,
+									determineDateFilter(sens, collection.getNamespace().getCollectionName())),
+							highUpdate);
 
 					if (searchResult == null) {
 						// Hits this code if the sensor does not exist.
 						// Puts a new document in the collection.
 						// Does not break as this will need to be done for all
 						// further collections.
-						System.out.println("HIGH null 2");
+						System.out.println("PERSISTANT DATA - SENSOR NOT FOUND: ADDING IT");
 						Document document = new Document();
 						document.put("date", sens.getDate());
 						document.put("sensorId", sens.getSensorId());
@@ -289,14 +284,12 @@ public class SensorDataThread implements Runnable {
 
 				// Looks for the sensor and returns if it exists
 
-				searchResult = collection.find(Filters.and(sensorFilter, ltFilter)).first();
+				searchResult = collection.find(Filters.and(sensorFilter, ltFilter,
+						determineDateFilter(sens, collection.getNamespace().getCollectionName()))).first();
 
 				if (searchResult != null) {
 					// Hits code if their is a higher value
 					// Stops looking further
-					System.out.println(sens.getValue());
-					System.out.println(searchResult.toString());
-					System.out.println("LOW Break 1");
 					break;
 				}
 
@@ -304,11 +297,16 @@ public class SensorDataThread implements Runnable {
 					// Hits this code only if there is no sensor with lower
 					// value or sensor doesn't exist
 					System.out.println("LOW null 1");
-					searchResult = collection.findOneAndUpdate(sensorFilter, lowUpdate);
+					searchResult = collection.findOneAndUpdate(
+							Filters.and(sensorFilter,
+									determineDateFilter(sens, collection.getNamespace().getCollectionName())),
+							lowUpdate);
 
 					if (searchResult == null) {
-						// This should never be hit because above for loop will handle new documents
-						System.out.println("LOW Break 2");
+						// This should never be hit because above for loop will
+						// handle new documents
+						System.out.println("PERSISTANT DATA - SENSOR NOT FOUND: ADDING IT");
+
 						Document document = new Document();
 						document.put("date", sens.getDate());
 						document.put("sensorId", sens.getSensorId());
@@ -323,6 +321,90 @@ public class SensorDataThread implements Runnable {
 				System.out.println("Error in pushing low persistant data: ");
 				e.printStackTrace();
 			}
+		}
+	}
+
+	private Bson determineDateFilter(SensorData sens, String collectionName) {
+
+		try {
+			Bson dateFilter = null;
+			ZonedDateTime startDate = ZonedDateTime.parse(sens.getDate());
+			ZonedDateTime endDate = startDate;
+
+			if (collectionName.equals(ConfigurationHandler.hourlyDataCollection)) {
+				startDate = ZonedDateTime.parse(sens.getDate());
+				startDate = startDate.minusMinutes(startDate.getMinute());
+				startDate = startDate.minusSeconds(startDate.getSecond());
+				endDate = startDate;
+				endDate = endDate.plusMinutes(59);
+				endDate = endDate.plusSeconds(59);
+
+			} else if (collectionName.equals(ConfigurationHandler.dailyDataCollection)) {
+				startDate = ZonedDateTime.parse(sens.getDate());
+				startDate = startDate.minusHours(startDate.getHour());
+				startDate = startDate.minusMinutes(startDate.getMinute());
+				startDate = startDate.minusSeconds(startDate.getSecond());
+				endDate = startDate;
+				endDate = endDate.plusHours(23);
+				endDate = endDate.plusMinutes(59);
+				endDate = endDate.plusSeconds(59);
+
+			} else if (collectionName.equals(ConfigurationHandler.weeklyDataCollection)) {
+				startDate = ZonedDateTime.parse(sens.getDate());
+				startDate = startDate.minusDays((startDate.getDayOfMonth() - 1));
+				startDate = startDate.minusHours(startDate.getHour());
+				startDate = startDate.minusMinutes(startDate.getMinute());
+				startDate = startDate.minusSeconds(startDate.getSecond());
+				endDate = startDate;
+				endDate = endDate.plusMonths(1);
+				endDate = endDate.plusHours(23);
+				endDate = endDate.plusMinutes(59);
+				endDate = endDate.plusSeconds(59);
+
+			} else if (collectionName.equals(ConfigurationHandler.monthlyDataCollection)) {
+				startDate = ZonedDateTime.parse(sens.getDate());
+				startDate = startDate.minusMonths(startDate.getMonthValue() - 1);
+				startDate = startDate.minusDays((startDate.getDayOfMonth() - 1));
+				startDate = startDate.minusHours(startDate.getHour());
+				startDate = startDate.minusMinutes(startDate.getMinute());
+				startDate = startDate.minusSeconds(startDate.getSecond());
+				endDate = startDate;
+				endDate = endDate.plusMonths(12);
+				endDate = endDate.plusMonths(1);
+				endDate = endDate.plusHours(23);
+				endDate = endDate.plusMinutes(59);
+				endDate = endDate.plusSeconds(59);
+
+			} else if (collectionName.equals(ConfigurationHandler.yearlyDataCollection)) {
+				startDate = ZonedDateTime.parse(sens.getDate());
+				startDate = startDate.minusYears(10);
+				startDate = startDate.minusMonths(startDate.getMonthValue() - 1);
+				startDate = startDate.minusDays((startDate.getDayOfMonth() - 1));
+				startDate = startDate.minusHours(startDate.getHour());
+				startDate = startDate.minusMinutes(startDate.getMinute());
+				startDate = startDate.minusSeconds(startDate.getSecond());
+				endDate = startDate;
+				endDate = endDate.plusYears(10);
+				endDate = endDate.plusMonths(12);
+				endDate = endDate.plusMonths(1);
+				endDate = endDate.plusHours(23);
+				endDate = endDate.plusMinutes(59);
+				endDate = endDate.plusSeconds(59);
+
+			} else {
+				System.out.println("SensorDataThread - couldnt handle time frame");
+				endDate = startDate;
+
+			}
+
+			Bson startFilter = Filters.gte("date", startDate.toString());
+			Bson endFilter = Filters.lt("date", endDate.toString());
+			dateFilter = Filters.and(startFilter, endFilter);
+
+			return dateFilter;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 
