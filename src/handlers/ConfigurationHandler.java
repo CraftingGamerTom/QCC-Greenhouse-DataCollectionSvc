@@ -24,9 +24,15 @@ public class ConfigurationHandler {
 	public static String databaseIP;
 	public static int databasePort;
 	
-	public static String rawSensorTable;
-	public static String observationTable;
-	public static String persistantSensorTable;
+	public static String databaseName;
+	public static String sensorNamesCollection; 
+	public static String liveDataCollection;
+	public static String rawDataCollection;
+	public static String hourlyDataCollection;
+	public static String dailyDataCollection;
+	public static String weeklyDataCollection;
+	public static String monthlyDataCollection;
+	public static String yearlyDataCollection;
 
 	/**
 	 * Loads the configuration file when created.
@@ -49,9 +55,15 @@ public class ConfigurationHandler {
 			databaseIP = properties.getProperty("databaseIP");
 			databasePort = Integer.parseInt(properties.getProperty("databasePort"));
 			
-			rawSensorTable = properties.getProperty("rawSensorTable");
-			observationTable = properties.getProperty("observationTable");
-			persistantSensorTable = properties.getProperty("persistantSensorTable");
+			databaseName = properties.getProperty("databaseName");
+			sensorNamesCollection = properties.getProperty("sensorNamesCollection"); 
+			liveDataCollection = properties.getProperty("liveDataCollection");
+			rawDataCollection = properties.getProperty("rawDataCollection");
+			hourlyDataCollection = properties.getProperty("hourlyDataCollection");
+			dailyDataCollection = properties.getProperty("dailyDataCollection");
+			weeklyDataCollection = properties.getProperty("weeklyDataCollection");
+			monthlyDataCollection = properties.getProperty("monthlyDataCollection");
+			yearlyDataCollection = properties.getProperty("yearlyDataCollection");
 
 			System.out.println("ConfigurationReader: Configuration Read / Updated");
 		} catch (FileNotFoundException e) {
@@ -59,6 +71,8 @@ public class ConfigurationHandler {
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("*** Error while attempting to load configuration file");
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -85,14 +99,15 @@ public class ConfigurationHandler {
 		System.out.print("* Database Port: ");
 		System.out.println(databasePort);
 		
-		System.out.print("* Raw Data Table: ");
-		System.out.println(rawSensorTable);
-
-		System.out.print("* Observation Table: ");
-		System.out.println(observationTable);
-		
-		System.out.print("* Persistant Sensor Table: ");
-		System.out.println(persistantSensorTable);
+		System.out.println("databaseName: " + databaseName);
+		System.out.println("sensorNamesCollection: " + sensorNamesCollection);
+		System.out.println("liveDataCollection: " + liveDataCollection);
+		System.out.println("rawDataCollection: " + rawDataCollection);
+		System.out.println("hourlyDataCollection: " + hourlyDataCollection);
+		System.out.println("dailyDataCollection: " + dailyDataCollection);
+		System.out.println("weeklyDataCollection: " + weeklyDataCollection);
+		System.out.println("monthlyDataCollection: " + monthlyDataCollection);
+		System.out.println("yearlyDataCollection: " + yearlyDataCollection);
 		
 		System.out.println("*\n** END CONFIGURATION VISUAL VERIFICATION **");
 	}
