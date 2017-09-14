@@ -56,7 +56,7 @@ please see 'main/resources/application.properties' : 'server.port'].
 		* --------- Document By: Thomas Rokicki -------- *
 		* ---------------------------------------------- *
 		* -------------- Date: 5/23/2017 --------------- *
-		* ------------ Revised: 7/25/2017 -------------- *
+		* ------------ Revised: 9/13/2017 -------------- *
 		* ---------------------------------------------- *
 		**************************************************
 
@@ -78,7 +78,9 @@ POST:
 	yearly)
 	~Puts sensor data in for live data viewing (Keeps latest sensor info)
 	~Creates database to handle friendly sensor names
-
+GET:
+ - /test
+ 	~Displays "Test" on the users browser to show the client is running.
 
 			----------   Data Collection   ---------- 
 
