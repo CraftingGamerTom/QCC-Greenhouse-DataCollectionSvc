@@ -132,6 +132,9 @@ public class SensorDataThread implements Runnable {
 			document.put("date", sens.getDate());
 			document.put("sensorId", sens.getSensorId());
 			document.put("type", sens.getType());
+			document.put("friendlyName", sens.getSensorId());
+			document.put("description", "Add a brief Description");
+			document.put("isVisible", false);
 
 			collection.insertOne(document);
 
