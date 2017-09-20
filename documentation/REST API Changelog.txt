@@ -4,9 +4,9 @@
 		* --------- Document By: Thomas Rokicki -------- *
 		* ---------------------------------------------- *
 		* -------------- Date: 5/30/2017 --------------- *
-		* ------------ Revised: 9/13/2017 -------------- *
+		* ------------ Revised: 9/19/2017 -------------- *
 		* ---------------------------------------------- *
-		* ---- Corresponding Version: 0.0.1-SNAPSHOT --- *
+		* ---- Corresponding Version: 0.0.4-SNAPSHOT --- *
 		* ---------------------------------------------- *
 		**************************************************
 		
@@ -43,9 +43,14 @@ This is listed below to make it easier to read quickly:
  - Setup a Singleton Instance of the Mongo Client to fix memory leak
 (9/5/2017)
 
-
 		------------- Version: 0.0.3-SNAPSHOT ------------
 All previous milestones are yet to be met. In this version the configuration file 
 reading was fixed. It is important to know that the configuration file is not an input
 stream. 
 (9/13/2017)
+
+		------------- Version: 0.0.4-SNAPSHOT ------------
+All previous milestones are yet to be met. 
+In this version the fields given to new sensors in the sensorNames collection was 
+updated for the admin UI of the front end.
+(9/19/2017)		

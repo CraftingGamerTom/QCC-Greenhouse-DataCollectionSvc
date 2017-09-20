@@ -4,13 +4,13 @@
 		* --------- Document By: Thomas Rokicki -------- *
 		* ---------------------------------------------- *
 		* -------------- Date: 5/23/2017 --------------- *
-		* ------------ Revised: 9/13/2017 -------------- *
+		* ------------ Revised: 9/19/2017 -------------- *
 		* ---------------------------------------------- *
 		**************************************************
 		
 			----------   Latest Versions   ----------
 Data Collector
-	- GreenhouseServer-0.0.3-SNAPSHOT.jar
+	- GreenhouseServer-0.0.4-SNAPSHOT.jar
 	
 			----------      Overview       ----------
 
@@ -148,7 +148,7 @@ available procedures for viewing data.
  - Yearly Data
  The High and Low value based on a given year for each sensor
  
-The collection(table) names are maintained in another collection to be given a friendly
+The sensor names are maintained in another collection to be given a friendly
 name for the front end.
 
 The collection names are defined in the configuration.cfg file that is read by the 

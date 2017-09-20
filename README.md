@@ -182,7 +182,7 @@ available procedures for viewing data.
  - Yearly Data
  The High and Low value based on a given year for each sensor
 
-The collection(table) names are maintained in another collection to be given a friendly
+The sensor names are maintained in another collection to be given a friendly
 name for the front end.
 
 The collection names are defined in the configuration.cfg file that is read by the 
