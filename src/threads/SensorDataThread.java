@@ -134,7 +134,8 @@ public class SensorDataThread implements Runnable {
 			document.put("type", sens.getType());
 			document.put("friendlyName", sens.getSensorId());
 			document.put("description", "Add a brief Description");
-			document.put("isVisible", false);
+			document.put("isVisible", true);
+			document.put("isDefault", false);
 
 			collection.insertOne(document);
 
@@ -238,7 +239,6 @@ public class SensorDataThread implements Runnable {
 				collection = database.getCollection(persistantCollections.get(index));
 
 				// Looks for the sensor and returns if it exists
-
 				searchResult = collection.find(Filters.and(sensorFilter, gtFilter,
 						determineDateFilter(sens, collection.getNamespace().getCollectionName()))).first();
 
