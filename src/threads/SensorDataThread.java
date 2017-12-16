@@ -1,5 +1,6 @@
 package threads;
 
+import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
@@ -354,12 +355,13 @@ public class SensorDataThread implements Runnable {
 
 			} else if (collectionName.equals(ConfigurationHandler.weeklyDataCollection)) {
 				startDate = ZonedDateTime.parse(sens.getDate());
-				startDate = startDate.minusDays((startDate.getDayOfMonth() - 1));
+				startDate = startDate.minusDays(DayOfWeek.valueOf(startDate.getDayOfWeek().toString()).getValue() - 1);
 				startDate = startDate.minusHours(startDate.getHour());
 				startDate = startDate.minusMinutes(startDate.getMinute());
 				startDate = startDate.minusSeconds(startDate.getSecond());
 				endDate = startDate;
-				endDate = endDate.plusMonths(1);
+				endDate = endDate.plusMonths(1); // Add 1 month
+				endDate = endDate.minusDays(1); // Minus 1 day
 				endDate = endDate.plusHours(23);
 				endDate = endDate.plusMinutes(59);
 				endDate = endDate.plusSeconds(59);
@@ -367,28 +369,28 @@ public class SensorDataThread implements Runnable {
 			} else if (collectionName.equals(ConfigurationHandler.monthlyDataCollection)) {
 				startDate = ZonedDateTime.parse(sens.getDate());
 				startDate = startDate.minusMonths(startDate.getMonthValue() - 1);
-				startDate = startDate.minusDays((startDate.getDayOfMonth() - 1));
+				startDate = startDate.minusDays(DayOfWeek.valueOf(startDate.getDayOfWeek().toString()).getValue() - 1);
 				startDate = startDate.minusHours(startDate.getHour());
 				startDate = startDate.minusMinutes(startDate.getMinute());
 				startDate = startDate.minusSeconds(startDate.getSecond());
 				endDate = startDate;
-				endDate = endDate.plusMonths(12);
-				endDate = endDate.plusMonths(1);
+				endDate = endDate.plusMonths(12); // Add 12 months
+				endDate = endDate.minusDays(1); // Minus 1 day
 				endDate = endDate.plusHours(23);
 				endDate = endDate.plusMinutes(59);
 				endDate = endDate.plusSeconds(59);
 
 			} else if (collectionName.equals(ConfigurationHandler.yearlyDataCollection)) {
 				startDate = ZonedDateTime.parse(sens.getDate());
-				startDate = startDate.minusYears(10);
 				startDate = startDate.minusMonths(startDate.getMonthValue() - 1);
-				startDate = startDate.minusDays((startDate.getDayOfMonth() - 1));
+				startDate = startDate.minusDays(DayOfWeek.valueOf(startDate.getDayOfWeek().toString()).getValue() - 1);
 				startDate = startDate.minusHours(startDate.getHour());
 				startDate = startDate.minusMinutes(startDate.getMinute());
 				startDate = startDate.minusSeconds(startDate.getSecond());
 				endDate = startDate;
-				endDate = endDate.plusYears(10);
-				endDate = endDate.plusMonths(12);
+				endDate = endDate.plusYears(9);
+				endDate = endDate.plusMonths(12); // Add 12 months
+				endDate = endDate.minusDays(1); // Minus 1 day
 				endDate = endDate.plusMonths(1);
 				endDate = endDate.plusHours(23);
 				endDate = endDate.plusMinutes(59);
