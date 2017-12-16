@@ -18,6 +18,7 @@ import com.mongodb.MongoClient;
 import dataSets.SensorData;
 import database.MongoClientConnection;
 import handlers.ConfigurationHandler;
+import handlers.MongoSecuritySingleton;
 import queues.SensorDataQueue;
 import threads.ThreadPoolManager;
 
@@ -60,6 +61,8 @@ public class Application {
 		ConfigurationHandler configHandler = new ConfigurationHandler();
 		configHandler.read();
 		configHandler.verify();
+		
+		MongoSecuritySingleton mongoSecurity = new MongoSecuritySingleton();
 		
         createDatabaseConnection();
         createQueues();
