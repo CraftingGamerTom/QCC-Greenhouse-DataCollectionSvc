@@ -1,6 +1,7 @@
 package database;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 import handlers.ConfigurationHandler;
 import handlers.MongoSecuritySingleton;
@@ -22,8 +23,10 @@ public class MongoClientConnection {
 	public static MongoClient getInstance() {
 		if (client == null) {
 
-			String mongoClientURI = "mongodb://" + DB_SRV_USR + ":" + DB_SRV_PWD + "@" + DB_URL + ":" + DB_PORT + "/"
-					+ dbName;
+			String uri = "mongodb://" + DB_SRV_USR + ":" + DB_SRV_PWD + "@" + DB_URL + ":" + DB_PORT + "/" + dbName
+					+ "?authSource=admin";
+
+			MongoClientURI mongoClientURI = new MongoClientURI(uri);
 
 			client = new MongoClient(mongoClientURI);
 		}
